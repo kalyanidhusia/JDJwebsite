@@ -439,6 +439,65 @@ body {
   margin-bottom: 0.7rem;
 }
 
+/* ===== Publication circle tiles ===== */
+
+.pub-circle-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.75rem;
+}
+
+.pub-circle {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  padding: 1.25rem;
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #ffffff;
+}
+
+/* ACRE publications (purple) */
+.pub-acre {
+  background-color: #582c83; /* ACRE */
+}
+
+/* Tax Foundation publications (blue) */
+.pub-tax-foundation {
+  background-color: #235485; /* Tax Foundation */
+}
+
+/* JDJ Insight Partners publications (green) */
+.pub-jdj {
+  background-color: #168118; /* JDJ Insight Partners */
+}
+
+.pub-circle-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: underline;
+}
+
+.pub-circle-title:link,
+.pub-circle-title:visited {
+  color: #ffffff;
+}
+
+.pub-circle-title:hover,
+.pub-circle-title:focus {
+  text-decoration: none;
+}
+
+.pub-circle-meta {
+  margin-top: 0.6rem;
+  font-size: 0.85rem;
+}
+
 /* ===== Data Viz Grid ===== */
 
 .viz-grid {
