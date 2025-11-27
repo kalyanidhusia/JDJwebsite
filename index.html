@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JDJ Insight Partners</title>
+
+  <!-- Favicon + icons -->
+  <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon-96x96.png" />
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="JDJ insight" />
+  <link rel="manifest" href="site.webmanifest" />
+
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/main.css" />
+
+  <!-- Scripts -->
+  <script defer src="assets/js/main.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-container">
+      <div class="logo">
+        <a href="index.html">
+          <img src="assets/img/logo.svg" alt="JDJ Insight Partners logo" class="logo-img" />
+          <span>JDJ Insight Partners</span>
+        </a>
+      </div>
+
+      <button class="nav-toggle" aria-label="Toggle navigation">
+        ☰
+      </button>
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="publications.html">Publications</a></li>
+          <li><a href="services.html">Data Viz Samples</a></li>
+          <li><a href="blog/">Blog</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="home">
+    <!-- HERO BANNER -->
+<!--     <section class="hero-banner">
+      <div class="container hero-content">
+        <h1>JDJ Insight Partners</h1>
+        <p>
+          Evidence-based insight and data storytelling at the intersection of
+          policy, economics, and analytics.
+        </p>
+        <a href="contact.html" class="btn-primary">Work with us</a>
+      </div>
+    </section> -->
+
+    <section class="hero-banner">
+      <div class="container hero-layout">
+        <div class="hero-image">
+          <img src="assets/img/hero.png"
+               alt="Joseph from JDJ Insight Partners" />
+        </div>
+
+        <div class="hero-text">
+          <h1>JDJ Insight Partners</h1>
+          <p>
+            Evidence-based insight and data storytelling at the intersection of
+            policy, economics, and analytics.
+          </p>
+          <a href="contact.html" class="btn-primary">Work with us</a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- SECONDARY BANNER / QUICK LINKS -->
+    <section class="quick-links-banner">
+      <div class="container quick-links">
+        <a href="about.html">About JDJ</a>
+        <a href="publications.html">Publications</a>
+        <a href="services.html">Data Visualization Portfolio</a>
+        <a href="#media-featured">Media & Interviews</a>
+        <a href="blog/">JDJ Blog</a>
+      </div>
+    </section>
+
+    <!-- FEATURED MEDIA / BLOG CAROUSEL (PRIMARY SPOT FOR JOSEPH) -->
+    <section id="media-featured" class="section section-media">
+      <div class="container">
+        <h2>Featured Insights from Joseph</h2>
+        <p class="section-intro">
+          Recent blogs, talks, and media interviews featuring Joseph from JDJ Insight Partners.
+        </p>
+
+        <div class="carousel" aria-label="Featured media carousel">
+          <button class="carousel-btn prev" aria-label="Previous item">&#10094;</button>
+
+          <div class="carousel-track">
+            <!-- Slide 1 -->
+            <article class="carousel-slide is-active">
+              <span class="tag">Media Interview</span>
+              <h3>Economic Outlook and Policy Choices</h3>
+              <p class="meta">Jan 10, 2025 · Podcast</p>
+              <p class="excerpt">
+                Joseph discusses inflation paths, labor markets, and how empirical evidence
+                shapes better policy design.
+              </p>
+              <a href="#" class="link-more" target="_blank" rel="noopener">
+                Listen to the interview
+              </a>
+            </article>
+
+            <!-- Slide 2 -->
+            <article class="carousel-slide">
+              <span class="tag">Blog</span>
+              <h3>Visualizing Inequality with Clarity</h3>
+              <p class="meta">Dec 3, 2024 · JDJ Insight Blog</p>
+              <p class="excerpt">
+                A walkthrough of how careful visualization reveals distributional patterns
+                hidden in raw tables.
+              </p>
+              <a href="blog/" class="link-more">
+                Read on the JDJ blog
+              </a>
+            </article>
+
+            <!-- Slide 3 -->
+            <article class="carousel-slide">
+              <span class="tag">Panel Discussion</span>
+              <h3>Evidence, Trust, and Policy Communication</h3>
+              <p class="meta">Oct 20, 2024 · Conference panel</p>
+              <p class="excerpt">
+                Joseph joins policy leaders to talk about transparent methods and public trust
+                in quantitative work.
+              </p>
+              <a href="#" class="link-more" target="_blank" rel="noopener">
+                Watch the panel
+              </a>
+            </article>
+          </div>
+
+          <button class="carousel-btn next" aria-label="Next item">&#10095;</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT PREVIEW (LINKS TO about.html) -->
+    <section class="section section-about">
+      <div class="container">
+        <h2>About JDJ Insight Partners</h2>
+        <p>
+          JDJ Insight Partners combines economics, data science, and policy expertise to
+          support organizations, researchers, and institutions that rely on evidence to
+          make decisions.
+        </p>
+        <a href="about.html" class="btn-secondary">Learn more about us</a>
+      </div>
+    </section>
+
+    <!-- PUBLICATIONS HIGHLIGHT (LINKS TO publications.html) -->
+    <section class="section section-publications">
+      <div class="container">
+        <h2>Selected Publications</h2>
+        <div class="card-grid">
+          <article class="pub-card">
+            <h3>Title of Publication 1</h3>
+            <p class="pub-meta">Journal · Year</p>
+            <p class="pub-summary">
+              Brief explanation of the question, methods, and policy relevance.
+            </p>
+            <a href="#" target="_blank" rel="noopener">View publication</a>
+          </article>
+
+          <article class="pub-card">
+            <h3>Title of Publication 2</h3>
+            <p class="pub-meta">Journal · Year</p>
+            <p class="pub-summary">
+              Short summary of the empirical strategy and main findings.
+            </p>
+            <a href="#" target="_blank" rel="noopener">View publication</a>
+          </article>
+
+          <article class="pub-card">
+            <h3>Title of Publication 3</h3>
+            <p class="pub-meta">Journal · Year</p>
+            <p class="pub-summary">
+              Another example where careful identification supports a concrete policy question.
+            </p>
+            <a href="#" target="_blank" rel="noopener">View publication</a>
+          </article>
+        </div>
+        <a href="publications.html" class="btn-secondary">View all publications</a>
+      </div>
+    </section>
+
+    <!-- DATA VIZ SAMPLES PREVIEW (LINKS TO services.html) -->
+    <section class="section section-data-viz">
+      <div class="container">
+        <h2>Data Visualization Samples</h2>
+        <p class="section-intro">
+          Examples of dashboards, geospatial work, and time-series graphics used in JDJ projects.
+        </p>
+
+        <div class="viz-grid">
+          <div class="viz-card">
+            <div class="viz-thumb placeholder-thumb">Chart 1</div>
+            <p>Interactive dashboard summarizing labor market trends over time.</p>
+          </div>
+          <div class="viz-card">
+            <div class="viz-thumb placeholder-thumb">Chart 2</div>
+            <p>Geospatial map showing regional differences in an economic indicator.</p>
+          </div>
+          <div class="viz-card">
+            <div class="viz-thumb placeholder-thumb">Chart 3</div>
+            <p>Scenario comparison for policy interventions using time-series charts.</p>
+          </div>
+        </div>
+
+        <a href="services.html" class="btn-secondary">See more samples</a>
+      </div>
+    </section>
+
+    <!-- SECOND MEDIA CAROUSEL (ANOTHER SPOT FOR JOSEPH) -->
+    <section class="section section-media">
+      <div class="container">
+        <h2>More from Joseph</h2>
+        <p class="section-intro">
+          Additional articles, blog posts, and recorded talks.
+        </p>
+
+        <div class="carousel" aria-label="More media carousel">
+          <button class="carousel-btn prev" aria-label="Previous item">&#10094;</button>
+
+          <div class="carousel-track">
+            <!-- Slide A -->
+            <article class="carousel-slide is-active">
+              <span class="tag">Article</span>
+              <h3>Data-Driven Budgeting for Local Governments</h3>
+              <p class="meta">Aug 14, 2024 · Commentary</p>
+              <p class="excerpt">
+                A piece on using empirical indicators to prioritize spending across
+                constrained budgets.
+              </p>
+              <a href="#" class="link-more" target="_blank" rel="noopener">
+                Read the article
+              </a>
+            </article>
+
+            <!-- Slide B -->
+            <article class="carousel-slide">
+              <span class="tag">Blog</span>
+              <h3>Three Charts That Changed a Policy Conversation</h3>
+              <p class="meta">Jun 30, 2024 · JDJ Insight Blog</p>
+              <p class="excerpt">
+                Behind the scenes of a data brief that reshaped a discussion on equity
+                and access.
+              </p>
+              <a href="blog/" class="link-more">
+                Read on the JDJ blog
+              </a>
+            </article>
+
+            <!-- Slide C -->
+            <article class="carousel-slide">
+              <span class="tag">Talk</span>
+              <h3>Communicating Uncertainty to Decision-Makers</h3>
+              <p class="meta">Apr 5, 2024 · Invited seminar</p>
+              <p class="excerpt">
+                Joseph outlines how to present intervals, scenarios, and model limits
+                without losing non-technical audiences.
+              </p>
+              <a href="#" class="link-more" target="_blank" rel="noopener">
+                Watch the talk
+              </a>
+            </article>
+          </div>
+
+          <button class="carousel-btn next" aria-label="Next item">&#10095;</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT CALL-TO-ACTION -->
+    <section class="section section-contact">
+      <div class="container">
+        <h2>Contact Us</h2>
+        <p>
+          For collaborations, speaking invitations, or project inquiries, reach out and
+          JDJ Insight Partners will follow up.
+        </p>
+        <a href="contact.html" class="btn-primary">Go to contact page</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <p>&copy; <span id="year"></span> JDJ Insight Partners. All rights reserved.</p>
+      <p>
+        <a href="contact.html">Email</a> ·
+        <a href="https://www.linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+      </p>
+    </div>
+  </footer>
+</body>
+</html>
