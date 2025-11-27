@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact · JDJ Insight Partners</title>
+
+  <meta name="description"
+        content="Contact JDJ Insight Partners to discuss tax policy analysis, revenue estimation, or data visualization projects." />
+  <link rel="canonical" href="https://jdjinsight.com/contact.html" />
+
+  <!-- Favicon + icons -->
+  <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon-96x96.png" />
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="JDJ Insight" />
+  <link rel="manifest" href="site.webmanifest" />
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-47MM8R2JMB"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-47MM8R2JMB');
+  </script>
+  <!-- END of Google tag -->
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/main.css" />
+
+  <!-- Scripts -->
+  <script defer src="assets/js/main.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-container">
+      <div class="logo">
+        <a href="index.html">
+          <img src="assets/img/logo.svg" alt="JDJ Insight Partners logo" class="logo-img" />
+          <span>JDJ Insight Partners</span>
+        </a>
+      </div>
+
+      <button class="nav-toggle" aria-label="Toggle navigation">☰</button>
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="publications.html">Publications</a></li>
+          <li><a href="services.html">Data Viz Samples</a></li>
+          <li><a href="blog/">Blog</a></li>
+          <li><a href="contact.html" aria-current="page">Contact Us</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow">Contact</p>
+        <h1>Get in Touch with JDJ Insight Partners</h1>
+        <p class="lead">
+          Use the form below to start a conversation about a project, request a briefing,
+          or ask about availability for upcoming work.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container" style="display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.6fr); gap: 2.5rem; align-items: flex-start;">
+        <div>
+          <h2>How we can help</h2>
+          <p>
+            JDJ Insight Partners works with clients on state and local tax policy analysis,
+            revenue estimation, data visualization, and related economic questions.
+          </p>
+          <p>
+            Typical requests include:
+          </p>
+          <ul>
+            <li>Reviews of proposed tax changes or reform packages</li>
+            <li>Revenue estimates and scenario comparisons</li>
+            <li>Design of dashboards or data visualization tools</li>
+            <li>Workshops, briefings, and advisory conversations</li>
+          </ul>
+
+          <h3>Direct contact</h3>
+          <p>
+            Email:
+            <a href="mailto:your-email@jdjinsight.com">your-email@jdjinsight.com</a><br />
+            <!-- Replace with real email address -->
+          </p>
+          <!-- Add location or other details here if you’d like -->
+        </div>
+
+        <div>
+          <h2>Send a message</h2>
+          <form class="contact-form" method="post" action="#">
+            <div class="form-row">
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" required />
+            </div>
+
+            <div class="form-row">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" required />
+            </div>
+
+            <div class="form-row">
+              <label for="organization">Organization / Affiliation (optional)</label>
+              <input id="organization" name="organization" type="text" />
+            </div>
+
+            <div class="form-row">
+              <label for="message">How can JDJ Insight Partners help?</label>
+              <textarea id="message" name="message" rows="5" required></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary">Submit</button>
+          </form>
+          <!-- Later you can point action="" to Formspree, Basin, or your own endpoint -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <p>&copy; <span id="year"></span> JDJ Insight Partners. All rights reserved.</p>
+      <p>
+        <a href="contact.html">Email</a> ·
+        <a href="https://www.linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+      </p>
+    </div>
+  </footer>
+</body>
+</html>
