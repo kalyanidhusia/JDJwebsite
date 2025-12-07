@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Florida Property Tax Burden Estimator (2025) — Aggregate Dashboard</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #0b1220;
+      --border: #1f2937;
+      --muted: #9ca3af;
+      --text: #e5e7eb;
+      --accent: #f59e0b;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial,
+        sans-serif;
+    }
+
+    .wrap {
+      max-width: 1100px;
+      margin: 32px auto;
+      padding: 0 16px 32px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.7);
+    }
+
+    .section-title {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    h1, h2 {
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+    }
+
+    h2 {
+      font-size: 1.2rem;
+    }
+
+    .pill {
+      background: #0b1324;
+      border: 1px solid #1f2a3a;
+      color: var(--accent);
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 0.75rem;
+      white-space: nowrap;
+    }
+
+    .btn {
+      background: var(--accent);
+      color: #052e16;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.95rem;
+      margin-top: 10px;
+    }
+
+    .btn:hover {
+      filter: brightness(1.05);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      margin-top: 8px;
+    }
+
+    th,
+    td {
+      padding: 7px 8px;
+      border-bottom: 1px solid #1f2937;
+      text-align: right;
+    }
+
+    th:first-child,
+    td:first-child {
+      text-align: left;
+    }
+
+    thead th {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    tbody tr:nth-child(odd) {
+      background: rgba(15, 23, 42, 0.6);
+    }
+
+    tbody tr:nth-child(even) {
+      background: rgba(15, 23, 42, 0.3);
+    }
+
+    .footer {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 10px;
+      line-height: 1.4;
+    }
+
+    .footer strong {
+      color: #e5e7eb;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="section-title">
+        <h1>Aggregate Usage Dashboard</h1>
+        <span class="pill">Admin View</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Total Users (actions logged)</td>
+            <td id="usage_count">0</td>
+          </tr>
+          <tr>
+            <td>Total Estimated Savings (all scenarios)</td>
+            <td id="total_savings">$0.00</td>
+          </tr>
+        </tbody>
+      </table>
+      <button class="btn" id="exportBtn">Export Results Table as CSV</button>
+    </div>
+
+    <div class="card">
+      <div class="section-title">
+        <h2>Results Table</h2>
+        <span class="pill">Outputs</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Homeowner v. Renter</th>
+            <th>Assessed Home Value or Annual Rent</th>
+            <th>Current Property Tax Liability</th>
+            <th>Savings with $1,000 Homestead Rebate</th>
+            <th>Savings with $250K Homestead Exemption</th>
+            <th>Savings with $500K Homestead Exemption</th>
+            <th>Savings with $1M Homestead Exemption</th>
+          </tr>
+        </thead>
+        <tbody id="results_body">
+          <!-- Rows can be appended here manually or via script -->
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer">
+      (*) The statewide millage rate used in the companion homeowner dashboard was
+      calculated using Florida Department of Revenue data related to 2024 millage
+      rates. This represents the composite average of all millage rates and may not
+      reflect a specific jurisdiction. Florida constitutionally caps annual millage
+      rate increases at 10 mills for counties, municipalities, and schools; and 1 mill
+      (0.05 mills in NW Florida) for water management districts.
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const exportBtn = document.getElementById("exportBtn");
+      const resultsBody = document.getElementById("results_body");
+      const usageCountEl = document.getElementById("usage_count");
+      const totalSavingsEl = document.getElementById("total_savings");
+
+      function updateSummary() {
+        const rows = Array.prototype.slice.call(resultsBody.querySelectorAll("tr"));
+        const count = rows.length;
+        usageCountEl.textContent = String(count);
+
+        // Sum across all "Savings" columns in the results table
+        const tables = document.querySelectorAll("table");
+        const resultsTable = tables[1]; // second table on the page
+        const headerCells = Array.prototype.slice.call(
+          resultsTable.querySelectorAll("thead th")
+        );
+
+        const savingsIndexes = [];
+        headerCells.forEach(function (th, idx) {
+          if (th.textContent.trim().startsWith("Savings")) {
+            savingsIndexes.push(idx);
+          }
+        });
+
+        let total = 0;
+        rows.forEach(function (row) {
+          const cells = Array.prototype.slice.call(row.querySelectorAll("td"));
+          savingsIndexes.forEach(function (idx) {
+            const cell = cells[idx];
+            if (!cell) return;
+            const num = parseFloat(cell.textContent.replace(/[^0-9.-]/g, ""));
+            if (Number.isFinite(num)) total += num;
+          });
+        });
+
+        totalSavingsEl.textContent = total.toLocaleString("en-US", {
+          style: "currency",
+          currency: "USD",
+          maximumFractionDigits: 2,
+        });
+      }
+
+      exportBtn.addEventListener("click", function () {
+        const tables = document.querySelectorAll("table");
+        const resultsTable = tables[1]; // second table
+        const headerCells = Array.prototype.slice.call(
+          resultsTable.querySelectorAll("thead th")
+        );
+        const headers = headerCells.map(function (th) {
+          return th.textContent.trim();
+        });
+
+        const rows = Array.prototype.slice.call(
+          resultsBody.querySelectorAll("tr")
+        ).map(function (row) {
+          return Array.prototype.slice
+            .call(row.querySelectorAll("td"))
+            .map(function (td) {
+              return td.textContent.trim();
+            });
+        });
+
+        const lines = [];
+        lines.push(
+          headers
+            .map(function (h) {
+              return '"' + h.replace(/"/g, '""') + '"';
+            })
+            .join(",")
+        );
+
+        rows.forEach(function (cols) {
+          lines.push(
+            cols
+              .map(function (c) {
+                return '"' + c.replace(/"/g, '""') + '"';
+              })
+              .join(",")
+          );
+        });
+
+        const csv = lines.join("\n");
+        const blob = new Blob([csv], {
+          type: "text/csv;charset=utf-8;",
+        });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "fl_property_tax_results.csv";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      });
+
+      // Expose a helper for manual/scripted updates
+      window.flTaxUpdateSummary = updateSummary;
+      updateSummary();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Florida Property Tax Burden Estimator (2025) — Homeowners</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #0b1220;
+      --border: #1f2937;
+      --muted: #9ca3af;
+      --text: #e5e7eb;
+      --accent: #22c55e;
+      --warn: #f59e0b;
+      --danger: #f97373;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial,
+        sans-serif;
+    }
+
+    .wrap {
+      max-width: 1100px;
+      margin: 32px auto;
+      padding: 0 16px 32px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.7);
+    }
+
+    .section-title {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      margin: 0;
+    }
+
+    .pill {
+      background: #0b1324;
+      border: 1px solid #1f2a3a;
+      color: var(--accent);
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 0.75rem;
+      white-space: nowrap;
+    }
+
+    .sub {
+      margin: 6px 0 14px;
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.1fr);
+      gap: 20px;
+    }
+
+    @media (max-width: 840px) {
+      .grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    select,
+    input[type="number"] {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid #334155;
+      background: #020617;
+      color: var(--text);
+      font-size: 0.9rem;
+    }
+
+    input[disabled] {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .flex {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      background: var(--accent);
+      color: #052e16;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .btn:hover {
+      filter: brightness(1.03);
+    }
+
+    #status {
+      font-size: 0.8rem;
+    }
+
+    .status-ok {
+      color: var(--accent);
+    }
+
+    .status-warn {
+      color: var(--warn);
+    }
+
+    .status-error {
+      color: var(--danger);
+    }
+
+    .kpi {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .box {
+      background: #020617;
+      border-radius: 12px;
+      padding: 10px 12px;
+      border: 1px solid #1f2937;
+      min-height: 72px;
+    }
+
+    .small {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .kpi-main {
+      font-size: 1.15rem;
+      font-weight: 800;
+    }
+
+    .kpi-sub {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      margin-top: 4px;
+    }
+
+    th,
+    td {
+      padding: 7px 8px;
+      border-bottom: 1px solid #1f2937;
+      text-align: right;
+    }
+
+    th:first-child,
+    td:first-child {
+      text-align: left;
+    }
+
+    thead th {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    tbody tr:nth-child(odd) {
+      background: rgba(15, 23, 42, 0.6);
+    }
+
+    tbody tr:nth-child(even) {
+      background: rgba(15, 23, 42, 0.3);
+    }
+
+    tbody tr strong {
+      font-weight: 700;
+    }
+
+    .footer {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 10px;
+      line-height: 1.4;
+    }
+
+    .footer strong {
+      color: #e5e7eb;
+    }
+
+    .page-footer {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 6px;
+      padding: 0 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="section-title">
+        <h1>Florida Property Tax Burden Estimator (2025) — Homeowners (Statewide Average)</h1>
+        <span class="pill">Owner-Occupied</span>
+      </div>
+      <p class="sub">
+        Enter your <strong>assessed value</strong> and use the default statewide millage rate
+        or adjust it if you have a more precise total. Then click
+        <strong>Calculate</strong> to estimate current taxes and savings under each reform
+        proposal.
+      </p>
+
+      <div class="grid">
+        <!-- LEFT: INPUTS + KPIs -->
+        <div>
+          <label for="county">County</label>
+          <select id="county">
+            <option value="Florida">Florida (Statewide Average)</option>
+          </select>
+
+          <div class="row" style="margin-top: 12px;">
+            <div>
+              <label for="assessed">Assessed Value ($)</label>
+              <input id="assessed" type="number" min="0" step="1" placeholder="e.g., 275000" />
+            </div>
+            <div>
+              <label for="mills">Total Mills (statewide avg.)</label>
+              <input id="mills" type="number" step="0.01" value="15.3998" />
+            </div>
+          </div>
+
+          <div class="flex" style="margin-top: 14px;">
+            <button class="btn" id="calcBtn">Calculate</button>
+            <span class="pill status-ok" id="status">Ready</span>
+          </div>
+
+          <div class="kpi">
+            <div class="box">
+              <div class="small muted">Current Estimated Tax</div>
+              <div class="kpi-main" id="kpi_current">$0.00</div>
+            </div>
+            <div class="box">
+              <div class="small muted">Effective Tax Rate</div>
+              <div class="kpi-sub" id="kpi_rate">0.00% of value</div>
+            </div>
+            <div class="box">
+              <div class="small muted">Total Millage</div>
+              <div class="kpi-sub" id="kpi_mills">15.3998 mills</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: TABLE -->
+        <div>
+          <table>
+            <thead>
+              <tr>
+                <th>Scenario</th>
+                <th>Tax / Savings ($)</th>
+              </tr>
+            </thead>
+            <tbody id="tbody">
+              <tr>
+                <td>Current Liability</td>
+                <td id="cur">$0.00</td>
+              </tr>
+              <tr>
+                <td>Savings — $1,000 Homestead Rebate</td>
+                <td id="rebate">-$0.00</td>
+              </tr>
+              <tr>
+                <td>Savings — $250,000 Homestead Exemption</td>
+                <td id="ex250">-$0.00</td>
+              </tr>
+              <tr>
+                <td>Savings — $500,000 Homestead Exemption</td>
+                <td id="ex500">-$0.00</td>
+              </tr>
+              <tr>
+                <td>Savings — $1,000,000 Homestead Exemption</td>
+                <td id="ex1000">-$0.00</td>
+              </tr>
+              <tr>
+                <td><strong>Net Liability after $1,000 Rebate</strong></td>
+                <td id="net_rebate">$0.00</td>
+              </tr>
+              <tr>
+                <td><strong>Net Liability after $250,000 Exemption</strong></td>
+                <td id="net_250">$0.00</td>
+              </tr>
+              <tr>
+                <td><strong>Net Liability after $500,000 Exemption</strong></td>
+                <td id="net_500">$0.00</td>
+              </tr>
+              <tr>
+                <td><strong>Net Liability after $1,000,000 Exemption</strong></td>
+                <td id="net_1000">$0.00</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="footer">
+            Notes: Net liabilities are floored at <strong>$0</strong>. Homestead rebates
+            operate like a refundable credit against current tax liability. Homestead
+            exemptions operate like <strong>value exemptions</strong>, exempting the first
+            portion of assessed value from the tax base.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      (*) The statewide millage rate used here (15.3998 mills) is a stylized average that
+      bundles county, school, municipal, and typical independent districts. Individual
+      jurisdictions may differ.
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const assessedInput = document.getElementById("assessed");
+      const millsInput = document.getElementById("mills");
+      const calcBtn = document.getElementById("calcBtn");
+      const statusEl = document.getElementById("status");
+
+      const kpiCurrent = document.getElementById("kpi_current");
+      const kpiRate = document.getElementById("kpi_rate");
+      const kpiMills = document.getElementById("kpi_mills");
+
+      const cur = document.getElementById("cur");
+      const rebate = document.getElementById("rebate");
+      const ex250 = document.getElementById("ex250");
+      const ex500 = document.getElementById("ex500");
+      const ex1000 = document.getElementById("ex1000");
+      const netRebate = document.getElementById("net_rebate");
+      const net250 = document.getElementById("net_250");
+      const net500 = document.getElementById("net_500");
+      const net1000 = document.getElementById("net_1000");
+
+      function formatCurrency(v) {
+        return v.toLocaleString("en-US", {
+          style: "currency",
+          currency: "USD",
+          maximumFractionDigits: 2,
+        });
+      }
+
+      function formatSavings(v) {
+        if (v <= 0) return "-$0.00";
+        return "-" + formatCurrency(v);
+      }
+
+      function setStatus(msg, cls) {
+        statusEl.textContent = msg;
+        statusEl.classList.remove("status-ok", "status-warn", "status-error");
+        if (cls) statusEl.classList.add(cls);
+      }
+
+      function calculate() {
+        const assessed = parseFloat(assessedInput.value);
+        let mills = parseFloat(millsInput.value);
+
+        if (!Number.isFinite(assessed) || assessed <= 0) {
+          setStatus("Enter a positive assessed value", "status-error");
+          kpiCurrent.textContent = "$0.00";
+          kpiRate.textContent = "0.00% of value";
+          kpiMills.textContent = (Number.isFinite(mills) ? mills : 0).toFixed(4) + " mills";
+
+          [
+            cur,
+            rebate,
+            ex250,
+            ex500,
+            ex1000,
+            netRebate,
+            net250,
+            net500,
+            net1000,
+          ].forEach(function (el) {
+            el.textContent = "$0.00";
+          });
+          rebate.textContent = "-$0.00";
+          ex250.textContent = "-$0.00";
+          ex500.textContent = "-$0.00";
+          ex1000.textContent = "-$0.00";
+          return;
+        }
+
+        if (!Number.isFinite(mills) || mills < 0) {
+          mills = 0;
+        }
+
+        const currentTax = (assessed * mills) / 1000;
+
+        // Rebate: flat $1,000 credit, not exceeding current tax
+        const rebateCredit = Math.min(1000, currentTax);
+        const netTaxRebate = Math.max(currentTax - rebateCredit, 0);
+
+        // Exemptions: taxable value reduced by exemption amount
+        function exemptionTax(exemptionAmount) {
+          const taxable = Math.max(assessed - exemptionAmount, 0);
+          return (taxable * mills) / 1000;
+        }
+
+        const tax250 = exemptionTax(250000);
+        const tax500 = exemptionTax(500000);
+        const tax1000 = exemptionTax(1000000);
+
+        const save250 = Math.max(currentTax - tax250, 0);
+        const save500 = Math.max(currentTax - tax500, 0);
+        const save1000 = Math.max(currentTax - tax1000, 0);
+
+        // KPIs
+        kpiCurrent.textContent = formatCurrency(currentTax);
+        const effRate = assessed > 0 ? (currentTax / assessed) * 100 : 0;
+        kpiRate.textContent = effRate.toFixed(2) + "% of value";
+        kpiMills.textContent = mills.toFixed(4) + " mills";
+
+        // Table - current liability
+        cur.textContent = formatCurrency(currentTax);
+
+        // Savings rows (shown as negative numbers)
+        rebate.textContent = formatSavings(rebateCredit);
+        ex250.textContent = formatSavings(save250);
+        ex500.textContent = formatSavings(save500);
+        ex1000.textContent = formatSavings(save1000);
+
+        // Net liabilities
+        netRebate.textContent = formatCurrency(netTaxRebate);
+        net250.textContent = formatCurrency(tax250);
+        net500.textContent = formatCurrency(tax500);
+        net1000.textContent = formatCurrency(tax1000);
+
+        setStatus("Calculated", "status-ok");
+      }
+
+      calcBtn.addEventListener("click", calculate);
+      assessedInput.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+          calculate();
+        }
+      });
+      millsInput.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+          calculate();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

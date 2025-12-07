@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Florida Property Tax Burden Estimator (2025) — Renters</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #0b1220;
+      --border: #1f2937;
+      --muted: #9ca3af;
+      --text: #e5e7eb;
+      --accent: #3b82f6;
+      --warn: #f59e0b;
+      --danger: #f97373;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial,
+        sans-serif;
+    }
+
+    .wrap {
+      max-width: 1100px;
+      margin: 32px auto;
+      padding: 0 16px 32px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.7);
+    }
+
+    .section-title {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      margin: 0;
+    }
+
+    .pill {
+      background: #0b1324;
+      border: 1px solid #1f2a3a;
+      color: var(--accent);
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 0.75rem;
+      white-space: nowrap;
+    }
+
+    .sub {
+      margin: 6px 0 14px;
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.1fr);
+      gap: 20px;
+    }
+
+    @media (max-width: 840px) {
+      .grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    select,
+    input[type="number"],
+    input[type="range"] {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid #334155;
+      background: #020617;
+      color: var(--text);
+      font-size: 0.9rem;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .slider-row {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+      gap: 12px;
+      align-items: flex-end;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 700px) {
+      .slider-row {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .flex {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      background: var(--accent);
+      color: #052e16;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .btn:hover {
+      filter: brightness(1.05);
+    }
+
+    #status {
+      font-size: 0.8rem;
+    }
+
+    .status-ok {
+      color: var(--accent);
+    }
+
+    .status-warn {
+      color: var(--warn);
+    }
+
+    .status-error {
+      color: var(--danger);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      margin-top: 4px;
+    }
+
+    th,
+    td {
+      padding: 7px 8px;
+      border-bottom: 1px solid #1f2937;
+      text-align: right;
+    }
+
+    th:first-child,
+    td:first-child {
+      text-align: left;
+    }
+
+    thead th {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    tbody tr:nth-child(odd) {
+      background: rgba(15, 23, 42, 0.6);
+    }
+
+    tbody tr:nth-child(even) {
+      background: rgba(15, 23, 42, 0.3);
+    }
+
+    .footer {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 10px;
+      line-height: 1.4;
+    }
+
+    .footer strong {
+      color: #e5e7eb;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="section-title">
+        <h1>Renter Savings Estimator — Statewide</h1>
+        <span class="pill">Renters</span>
+      </div>
+      <p class="sub">
+        Estimate renter savings from a <strong>$1,000 circuit breaker tax credit</strong>,
+        or simulate a <strong>landlord property tax reduction</strong> that may be
+        <strong>partially passed through</strong> to renters.
+      </p>
+      <div class="grid">
+        <div>
+          <label for="annualRent">Annual Rent ($)</label>
+          <input id="annualRent" type="number" min="0" step="1" placeholder="e.g., 24000" />
+
+          <div class="row" style="margin-top: 12px;">
+            <div>
+              <label for="programType">Program Type</label>
+              <select id="programType">
+                <option value="circuit">Renter Circuit Breaker ($1,000 credit)</option>
+                <option value="pass">Landlord Relief Pass-Through</option>
+              </select>
+            </div>
+            <div id="reliefWrap" style="display: none;">
+              <label for="reliefAmt">Landlord Tax Relief ($)</label>
+              <input id="reliefAmt" type="number" min="0" step="1" value="1000" />
+            </div>
+          </div>
+
+          <div class="slider-row">
+            <div>
+              <label for="passRate">
+                Pass-Through Rate:
+                <span id="passLabel">70%</span>
+              </label>
+              <input id="passRate" type="range" min="50" max="85" step="1" value="70" />
+            </div>
+            <div>
+              <label>&nbsp;</label>
+              <button class="btn" id="calcRentBtn">Estimate Savings</button>
+            </div>
+          </div>
+
+          <div class="flex" style="margin-top: 10px;">
+            <span class="pill status-ok" id="status">Ready</span>
+          </div>
+        </div>
+
+        <div>
+          <table>
+            <thead>
+              <tr>
+                <th>Output</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Annual Rent</td>
+                <td id="r_rent">$0.00</td>
+              </tr>
+              <tr>
+                <td>Estimated Savings (annual)</td>
+                <td id="r_savings">$0.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      (*) The statewide millage rate used in the companion homeowner dashboard was
+      calculated using Florida Department of Revenue data related to 2024 millage
+      rates. This represents the composite average of all millage rates and may not
+      reflect a specific jurisdiction.
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const annualRentInput = document.getElementById("annualRent");
+      const programType = document.getElementById("programType");
+      const reliefWrap = document.getElementById("reliefWrap");
+      const reliefAmtInput = document.getElementById("reliefAmt");
+      const passRateInput = document.getElementById("passRate");
+      const passLabel = document.getElementById("passLabel");
+      const calcBtn = document.getElementById("calcRentBtn");
+      const statusEl = document.getElementById("status");
+
+      const rentOut = document.getElementById("r_rent");
+      const savingsOut = document.getElementById("r_savings");
+
+      function formatCurrency(v) {
+        return v.toLocaleString("en-US", {
+          style: "currency",
+          currency: "USD",
+          maximumFractionDigits: 2,
+        });
+      }
+
+      function setStatus(msg, cls) {
+        statusEl.textContent = msg;
+        statusEl.classList.remove("status-ok", "status-warn", "status-error");
+        if (cls) statusEl.classList.add(cls);
+      }
+
+      programType.addEventListener("change", function () {
+        const mode = programType.value;
+        if (mode === "pass") {
+          reliefWrap.style.display = "";
+          setStatus("Landlord relief pass-through mode", "status-ok");
+        } else {
+          reliefWrap.style.display = "none";
+          setStatus("Circuit breaker credit mode", "status-ok");
+        }
+      });
+
+      passRateInput.addEventListener("input", function () {
+        passLabel.textContent = passRateInput.value + "%";
+      });
+
+      function calculate() {
+        const rent = parseFloat(annualRentInput.value);
+        if (!Number.isFinite(rent) || rent <= 0) {
+          setStatus("Enter a positive annual rent amount", "status-error");
+          rentOut.textContent = "$0.00";
+          savingsOut.textContent = "$0.00";
+          return;
+        }
+
+        const mode = programType.value;
+        let savings = 0;
+
+        if (mode === "circuit") {
+          // Flat $1,000 credit, capped by annual rent
+          savings = Math.min(1000, rent);
+        } else {
+          let relief = parseFloat(reliefAmtInput.value);
+          if (!Number.isFinite(relief) || relief < 0) relief = 0;
+          const passRate = parseFloat(passRateInput.value) / 100;
+          // Savings is share of landlord tax relief, capped at annual rent
+          savings = Math.min(rent, relief * passRate);
+        }
+
+        rentOut.textContent = formatCurrency(rent);
+        savingsOut.textContent = formatCurrency(savings);
+
+        if (savings <= 0) {
+          setStatus("No estimated savings under these assumptions", "status-warn");
+        } else {
+          setStatus("Calculated", "status-ok");
+        }
+      }
+
+      calcBtn.addEventListener("click", calculate);
+      annualRentInput.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") calculate();
+      });
+    })();
+  </script>
+</body>
+</html>
